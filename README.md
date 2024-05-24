@@ -18,9 +18,9 @@
 - There are two playbooks here:
     - ec2.create.yml
     - deploy.yml
-- ec2.create.yml: creates an ec2 for the django application to be deployed
+- ec2.create.yml: creates an ec2 for the website to be deployed
 - deploy.yml:
-    - This ensures the dependencies like python, nginx and git are installed or not.
+    - This ensures the dependencies like npm, nodejs, nginx and git are installed or not.
     - Clones the astro repository to the right location.
     - Installs the project dependencies and build the website.
     - Creates `nginx.conf` from the template.

@@ -1,0 +1,49 @@
+---
+- hosts: aws_ec2
+  become: yes
+  remote_user: ec2-user
+
+  tasks:
+    - name: install dependencies
+      dnf:
+        name:
+          - nginx
+          - git
+          - npm
+          - nodejs
+        state: present
+
+    - name: clone repo
+      git:
+        repo: 'https://github.com/FOSSEE/animate2024.git'
+        dest: /srv/animate2024
+        clone: yes
+        update: yes
+
+    - name: build astro website
+      shell: |
+        npm ci
+        npm run build
+      args:
+        chdir: /srv/animate2024
+
+    - name: create nginx sites-enabled folder
+      command:
+        cmd: mkdir /etc/nginx/sites-enabled
+        creates: /etc/nginx/sites-enabled
+
+    - name: add conf to sites-enabled
+      lineinfile:
+        path: /etc/nginx/nginx.conf
+        insertafter: '^    include /etc/nginx/conf.d/\*.conf;$'
+        line: '    include /etc/nginx/sites-enabled/*.conf;'
+
+    - name: Add nginx config
+      template:
+        src: ./templates/astro-ansible.conf.j2
+        dest: /etc/nginx/sites-enabled/astro-ansible.conf
+
+    - name: Start nginx 
+      systemd_service:
+        name: nginx.service
+        state: reloaded

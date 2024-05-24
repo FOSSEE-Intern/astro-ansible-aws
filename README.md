@@ -23,5 +23,5 @@
     - This ensures the dependencies like python, nginx and git are installed or not.
     - Clones the astro repository to the right location.
     - Installs the project dependencies and build the website.
-    - Creates `nginx.conf` and systemd service for gunicorn from templates.
+    - Creates `nginx.conf` from the template.
     - Starts or restarts nginx in the end.

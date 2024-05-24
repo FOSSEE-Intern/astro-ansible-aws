@@ -22,6 +22,6 @@
 - deploy.yml:
     - This ensures the dependencies like npm, nodejs, nginx and git are installed or not.
     - Clones the astro repository to the right location.
-    - Installs the project dependencies and build the website.
+    - Installs the project dependencies and builds the website.
     - Creates `nginx.conf` from the template.
     - Starts or restarts nginx in the end.
